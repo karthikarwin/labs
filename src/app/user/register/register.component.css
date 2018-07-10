@@ -1,0 +1,34 @@
+.signupSec {
+    padding: 60px 0px;
+}
+
+.welcomeMsgSec {
+    text-align: center;
+    padding: 1rem;
+}
+
+.welcomeMsgSec p:first-child {
+    margin-top: 25px;
+}
+
+.welcomeMsgSec p,h4 {
+    margin: 42px;
+}
+
+form {
+    padding: 20px;
+}
+small {
+    color: red;
+    padding: 1px 15px;
+    display: -webkit-box;
+}
+
+re-captcha {
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+}
+
+  #rc-imageselect {transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;}
+

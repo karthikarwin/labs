@@ -1,0 +1,210 @@
+<div class="main-section">
+    <div class="main-in">
+      <div class="title">
+        <h5>Systematic Withdrawal</h5>
+      </div>
+      <div class="row">
+        <div class="col col-sm-9">
+          <div class="redemption-form">
+            <form (ngSubmit)="withdrawal()" [formGroup]="withdrawalForm">
+              <div class="my-form-group">
+                  <label for="folioNo" class="my-label">Select Folio Number</label>
+                  <span class="colon">:</span>
+                  <select name="folioNo" id="folioNo" 
+                  class="my-form-control"
+                  formControlName="folioNo">
+                    <option value="">Select Account Number</option>
+                    <option value="0">215666</option>
+                    <option value="1">8766565</option>
+                  </select>
+                </div>
+              <div class="my-form-group">
+                <label for="withdrawFrom" class="my-label">Select a scheme to Withdrawal From</label>
+                <span class="colon">:</span>
+                <select name="withdrawFrom" id="withdrawFrom" 
+                  class="my-form-control"
+                  formControlName="withdrawFrom">
+                  <option value="">Select a Scheme</option>
+                  <option value="0">Scheme 1</option>
+                  <option value="1">Scheme 2</option>
+                </select>
+              </div>
+              <hr>
+              <div class="my-form-group">
+                <label class="my-label v-a-t">Withdrawal</label>
+                <span class="colon v-a-t">:</span>
+                <div class="my-form-control">
+  
+                  <label for="amount" class="redeem-label">
+                    <input 
+                    type="radio" class="my-form-control radio"
+                    name="withdrawValue" id="amount"
+                    value="amount" 
+                    (change)="isUnits = !isUnits"
+                    formControlName="withdrawValue">
+                    Amount
+                  </label>
+  
+                  <label for="unit" class="redeem-label">
+                    <input 
+                    type="radio" class="my-form-control radio" 
+                    name="withdrawValue" id="unit" 
+                    value="unit"
+                    (change)="isUnits = !isUnits"
+                    formControlName="withdrawValue">
+                    Unit
+                  </label>
+  
+                  <div class="input-group" *ngIf="!isUnits">
+                    <span class="inputSpan">Rs</span><input type="text" class="red-option" formControlName="amount">
+                    <i class="text-muted">Locked in 30s</i>
+                  </div>
+  
+                  <div class="input-group" *ngIf="isUnits">
+                    <span class="inputSpan">Units</span><input type="text" class="red-option" formControlName="unit">
+                    <i class="text-muted">Locked in 30s</i>
+                  </div>
+  
+                </div>
+              </div>
+              <hr>
+              <div class="my-form-group">
+                <label for="swpFrequency" class="my-label">SWP Frequency</label>
+                <span class="colon">:</span>
+                <!-- <input type="text" class="my-form-control" id="scheme"> -->
+                <select name="swpFrequency" id="swpFrequency" class="my-form-control"
+                  formControlName="swpFrequency">
+                  <option value="">Select</option>
+                  <option value="0">Monthly</option>
+                  <option value="1">Quarterly</option>
+                  <option value="1">Yearly</option>
+                </select>
+              </div>
+              <div class="my-form-group">
+                <label for="swpDate" class="my-label">SWP Date</label>
+                <span class="colon">:</span>
+                <select name="swpDate" id="swpDate"   
+                  class="my-form-control"
+                  (change)="changeFormat($event)"
+                  formControlName="swpDate">
+                  <option value="">Select</option>
+                  <option value="0">01</option>
+                  <option value="1">05</option>
+                  <option value="2">15</option>
+                  <option value="3">25</option>
+                  <option value="4">Any Date</option>
+                </select>
+              </div>
+              <hr>
+              <div class="my-form-group">
+                <label class="my-label">First Installment Date</label>
+                <span class="colon">:</span>
+                <div class="input-group my-form-control date-group" *ngIf="notAnyDate">
+                  <input type="text" class="my-form-control date" formControlName="fInsDate" bsDatepicker
+                  #dp1="bsDatepicker"
+                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                  <span class="inputSpan cal" (click)="dp1.toggle()"><fa name="calendar"></fa></span>
+                </div>
+                <div class="input-group my-form-control date-group" *ngIf="!notAnyDate">
+                  <select name="month" id="month" #fInsMonth>
+                    <option value="">Select Month</option>
+                    <option value="jan">January</option>
+                    <option value="feb">February</option>
+                    <option value="mar">March</option>
+                    <option value="apr">April</option>
+                    <option value="may">May</option>
+                    <option value="jun">June</option>
+                    <option value="jul">July</option>
+                    <option value="aug">August</option>
+                    <option value="sep">Septemper</option>
+                    <option value="oct">October</option>
+                    <option value="nov">November</option>
+                    <option value="dec">December</option>
+                  </select>
+                  <select name="month" id="month" #fInsYear>
+                      <option value="">Select Year</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                  </select>
+                  <input type="hidden" value="{{fInsMonth.value}} - {{fInsYear.value}}" formControlName="fInsDate">
+                </div>
+              </div>
+              <div class="my-form-group">
+                <label class="my-label v-a-t">Last Installment Date</label>
+                <span class="colon v-a-t">:</span>
+                <div class="input-group my-form-control date-group" *ngIf="notAnyDate">
+                  <input type="text" class="my-form-control date" formControlName="lInsDate" bsDatepicker
+                  #dp2="bsDatepicker"
+                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                  <span class="inputSpan cal" (click)="dp2.toggle()"><fa name="calendar"></fa></span>
+                  <label for="continue"><input type="checkbox" id="continue" value="continue" formControlName="untilCancel">Continue until cancelled</label>
+                </div>
+                <div class="input-group my-form-control date-group" *ngIf="!notAnyDate">
+                  <select name="month" id="month" #lInsMonth>
+                    <option value="">Select Month</option>
+                    <option value="jan">January</option>
+                    <option value="feb">February</option>
+                    <option value="mar">March</option>
+                    <option value="apr">April</option>
+                    <option value="may">May</option>
+                    <option value="jun">June</option>
+                    <option value="jul">July</option>
+                    <option value="aug">August</option>
+                    <option value="sep">Septemper</option>
+                    <option value="oct">October</option>
+                    <option value="nov">November</option>
+                    <option value="dec">December</option>
+                  </select>
+                  <select name="month" id="month" #lInsYear>
+                      <option value="">Select Year</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                  </select>
+                  <label for="continue">
+                  <input type="checkbox" id="continue" value="continue" formControlName="untilCancel">
+                  Continue until cancelled</label>
+                  <input type="hidden" value="{{lInsMonth.value}} - {{lInsYear.value}}" formControlName="lInsDate">
+                </div>
+              </div>
+              <hr>
+              <div class="my-form-group">
+                <label for="bank" class="my-label">Select preferred bank for credit</label>
+                <span class="colon">:</span>
+                <select name="bank" id="bank" 
+                  class="my-form-control"
+                  formControlName="bank">
+                  <option value="">Select Bank</option>
+                  <option value="0">Axis Bank</option>
+                  <option value="1">IcIcI Bank</option>
+                </select>
+              </div>
+              <div class="form-foot">
+                <label for="agree"><input type="checkbox" id="agree" formControlName="agreed">I agree the statement and ...</label>
+                <div class="btns">
+                  <button type="submit" class="ok-btn"
+                  [disabled]="!withdrawalForm.valid || !agreed">Submit</button>
+                  <button type="reset" class="rej-btn">Cancel</button>
+                </div>
+              </div>
+              <div class="otp">
+                <app-otp></app-otp>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col col-sm-3 col-right">
+          <div class="display-units">
+            <p>Available for Redemption</p>
+            <h5>18.65 units - 12,548.52/-</h5>
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+    

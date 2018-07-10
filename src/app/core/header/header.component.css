@@ -1,0 +1,15 @@
+.navbar {
+    justify-content: space-between;
+    box-shadow: 1px 0px 1px 1px #ccc;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+.navbar-collapse {
+    flex-grow: 0;
+}
+.navbehind {
+    height: 62px;
+    width: 100%;
+}

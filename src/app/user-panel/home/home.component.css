@@ -1,0 +1,89 @@
+.main-section {
+    padding: 15px;
+}
+.main-in {
+    padding: 20px;
+    background-color: #ddd;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+button {
+    padding: 5px 20px;
+    background: #fff;
+    box-shadow: 0;
+    border: 1px solid #888;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+}
+.card {
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.card-title {
+    border-bottom: 2px solid #aaa;
+    padding: 0px 0px 10px 0px;
+}
+th {
+    text-align: center;
+    background-color: #aaa;
+    padding: 5px;
+}
+td {
+    text-align: center;
+    padding: 5px;
+}
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+.dash-card {
+    display: flex;
+    border: 1px solid #333;
+    background-color: #fff;
+    height: 100%;
+}
+.dash-card .count {
+    background: #000;
+    color: #fff;
+    width: 50px;
+    font-size: 20px;
+    padding: 15px;
+    margin:0;
+}
+.dash-card .name {
+    flex: 1;
+    padding: 5px 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+.row {
+    align-items: stretch;
+}
+.dark-btn {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+@media only screen and (max-width: 767px) {
+    .dash-card .name {
+        font-size: 14px;
+    }
+    .stats .col {
+        margin-bottom: 10px;
+    }
+    th.md-width {
+        min-width: 150px;
+    }
+    th.sm-width {
+        min-width: 50px;
+    }
+    .card-body table {
+        font-size: 14px;
+    }
+}

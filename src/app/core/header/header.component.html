@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand logo" routerLink="/">Quant<span class="blue">Labs</span></a>
+  <div class="some" id="navbarSupportedContent">
+
+    <div class="btn-group" dropdown placement="bottom right" *ngIf="!isLoggedIn && !isRegister">
+      <button id="button-alignment" type="button"
+              class="btn btn-dark"
+              (mousedown)="goToSignUp()">
+        SignUp
+      </button>
+    </div>
+    <div class="btn-group" dropdown placement="bottom right" *ngIf="!isLoggedIn && isRegister">
+      <button id="button-alignment" type="button"
+              class="btn btn-dark"
+              (mousedown)="goToLogin()">
+        Login
+      </button>
+    </div>
+    <div class="btn-group" dropdown placement="bottom right" *ngIf="isLoggedIn">
+      <button id="button-alignment" dropdownToggle type="button"
+              class="btn btn-light dropdown-toggle" aria-controls="dropdown-alignment">
+        {{username}}<span class="caret"></span>
+      </button>
+      <ul id="dropdown-alignment" *dropdownMenu class="dropdown-menu dropdown-menu-right"
+          role="menu" aria-labelledby="button-alignment">
+        <li role="menuitem"><a class="dropdown-item" routerLink="/dashboard">Dashboard</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink="/user/account-setup">My Account</a></li>
+        <li class="divider dropdown-divider"></li>
+        <li role="menuitem"><a class="dropdown-item" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="navbehind">
+  
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Your session is going to expire within {{count}} seconds.
+    <hr>
+    <button (click)="logout()">LogOut</button>
+    <button (click)="restart()">Stay Logged In</button>
+  </div>
+</ng-template>
+

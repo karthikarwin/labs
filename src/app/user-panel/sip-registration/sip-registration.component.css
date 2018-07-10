@@ -1,0 +1,386 @@
+.main-section {
+    padding: 15px;
+}
+.main-in {
+    padding: 20px;
+    background-color: #ddd;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+button {
+    padding: 5px 20px;
+    background: #fff;
+    box-shadow: 0;
+    border: 1px solid #888;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+}
+.card {
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.card-title {
+    border-bottom: 2px solid #aaa;
+    padding: 0px 0px 10px 0px;
+}
+.selected-scheme {
+    padding: 30px 20px;
+    background-color: #fff;
+    height: 100%;
+}
+.selected-scheme p {
+    margin-bottom: 0px;
+    font-size: 0.94rem;
+    font-weight: 400;
+    color: rgb(14, 108, 231);
+}
+
+.steps {
+    margin: 0;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.steps .col {
+    padding: 20px 0px;
+    font-weight: 500;
+    /* cursor: pointer; */
+}
+.step {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #111;
+    color: #fff;
+    line-height: 30px;
+    margin-right: 5px;
+}
+.step-view {
+    background-color: #fff;
+}
+.step-view-in {
+    padding: 30px;
+}
+.schemes {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.fileInp {
+    width: 200px;
+}
+.search {
+    padding: 0px 0px 20px 0px;
+    position: relative;
+}
+.search input {
+    width: 100%;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+}
+.schemes .scheme {
+    padding:6px 10px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #aaa;
+    margin-bottom: 7px;
+    border-radius: 4px;
+}
+.scheme button {
+    background-color: #111;
+    color: #fff;
+}
+.pagination {
+    flex-direction: row-reverse;
+}
+.pages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    border-collapse: collapse !important;
+    width: auto;
+}
+li.page {
+    display: table-cell;
+    border: 1px solid #111;
+    border-collapse: collapse !important;
+    padding: 3px 10px;
+}
+li.page:hover {
+    background-color: #111;
+    color: #fff;
+    cursor: pointer;
+}
+
+.redemption-form {
+    background: #fff;
+    padding: 40px 40px;
+}
+.my-form-group {
+    width:100%;
+    display: inline-block;
+    margin-bottom: 10px;
+    vertical-align: baseline;
+}
+.my-label {
+    display: inline-block;
+    margin-right: -4px;
+    width: 40%;
+    text-align: right;
+    padding-right: 5px;
+}
+.my-form-control {
+    display: inline-block;
+    margin-right: -4px;
+    width: 50%;
+    padding: 4px 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.my-form-control.radio {
+    width: 30px;
+    vertical-align: middle;
+    height: 15px;
+}
+span.colon {
+    display: inline-block;
+    vertical-align: baseline;
+    width: 30px;
+    text-align: center;
+}
+.redeem-label {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.red-option {
+    display: block;
+}
+.inputSpan {
+    background-color: #aaa;
+    color: #fff;
+    padding: 0px 10px;
+    line-height: 30px;
+}
+.input-group input, select {
+    padding: 3px 5px;
+}
+.input-group input:focus {
+    outline: none;
+}
+.v-a-t {
+    vertical-align: top !important;
+    padding-top: 5px;
+}
+.form-foot {
+    padding: 30px 0px;
+}
+#agree {
+    margin-right: 15px;
+}
+.ok-btn {
+    background-color: #000;
+    color: #fff;
+}
+.btns {
+    margin-top: 20px;
+}
+i.text-muted {
+    display: inline-block;
+    margin-left: 6px;
+}
+button[disabled] {
+    opacity: 0.6;
+}
+.switchTo {
+    width: 100%;
+}
+.date-group {
+    position: relative;
+}
+span.cal {
+    position: absolute;
+    right: 6px;
+}
+input.date {
+    width: 100%;
+}
+.preview {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #666;
+}
+
+.protfolio {
+    padding: 5px 0px 15px 0px;
+}
+.protfolio select {
+    width: 100%;
+    border-radius: 5px;
+}
+.search-results {
+    min-height: 200px;
+    border: 1px dashed lightgray;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+
+.payment {
+    width: 100%;
+    min-height: 100px;
+    border: 1px dashed #bbb;
+    text-align: center;
+}
+.payment button {
+    margin: 35px 0px;
+}
+p.text-secondary {
+    cursor: pointer;
+}
+
+.payment button:hover {
+    margin: 35px 0px;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn.selected {
+    background-color: #111 !important;
+    color: #fff;
+}
+.btn.dashboard {
+    flex-direction: row;
+    align-content: center;
+    text-align: left;
+    padding: 0;
+    flex: 1;
+}
+.btn-primary {
+    background-color: #333;
+    color:#fff;
+}
+
+.fa {
+    font-size: 50px;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.fa.fail {
+    background-color: #f00;
+}
+.fa.succ {
+    background-color: #0f0;
+}
+
+ul#dropDown {
+    list-style: none;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #aaa;
+    position: absolute;
+    width: 100%;
+    overflow: auto;
+    max-height: 300px;
+}
+ul#dropDown li {
+    padding: 4px;
+    border-bottom: 1px solid #aaa;
+    cursor: pointer;
+}
+ul#dropDown li:hover {
+    background-color: rgb(57, 138, 245);
+    color: #fff;
+}
+.optionss {
+    font-size: 15px;
+}
+.noSip p {
+    cursor: pointer;
+    color: #333;
+}
+
+.tabActive {
+    color: green;
+}
+.tabActive span {
+    background-color: green;
+    color:#fff;
+}
+
+.tabCompleted {
+    color: rgb(14, 130, 175);
+}
+
+.tabCompleted span {
+    background-color: rgb(14, 130, 175);
+    color:#fff;
+
+}
+
+.selected-scheme p span {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #333;
+    color: #aaa !important;
+    border-radius: 4px;
+    float: right;
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .step {
+        display: block;
+        margin: 0 auto;
+    }
+    .steps .col {
+        font-size: 14px;
+    }
+    .col-right {
+        margin-top: 10px;
+        order: 2;
+    }
+    .scheme {
+        align-items: center;
+    }
+    .my-label {
+        font-size: 14px;
+        width: auto;
+        text-align: left;
+    }
+    span.colon {
+        width: 10px;
+    }
+    .my-form-control {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 577px) {
+    ul.pages {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .pagination {
+        flex-wrap: wrap;
+    }
+    .btn.dashboard {
+        width: 100%;
+    }
+}

@@ -1,0 +1,38 @@
+label {
+    display: block;
+}
+.radios {
+    width: 100%;
+    display: inline-block;
+}
+.radios label {
+    display: inline-block;
+    width: 150px;
+}
+.radios label input {
+    margin-right: 7px;
+    vertical-align: middle;
+}
+button {
+    padding: 5px 20px;
+    background: #fff;
+    box-shadow: 0;
+    border: 1px solid #888;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+    color: #000;
+}
+.ok-btn {
+    background-color: #000;
+    color: #fff;
+}
+input[type='text'] {
+    padding: 3px 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+small span {
+    cursor: pointer;
+    font-size: 12px;
+}

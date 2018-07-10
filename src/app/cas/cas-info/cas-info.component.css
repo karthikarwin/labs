@@ -1,0 +1,44 @@
+.main-section {
+    padding: 15px;
+}
+.main-in {
+    padding: 20px;
+    background-color: #ddd;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+button {
+    padding: 5px 20px;
+    background: #fff;
+    box-shadow: 0;
+    border: 1px solid #888;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+    color: #000;
+}
+.ok-btn {
+    background-color: #000;
+    color: #fff;
+}
+.card {
+    height: 100%;
+}
+.casInfo-body-txt {
+    padding: 10px 0px;
+}
+.cas-info {
+    padding: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+    .cas-info {
+        padding: 0;
+    }
+    .mobm .card-body {
+        padding: 0.75rem;
+    }
+}

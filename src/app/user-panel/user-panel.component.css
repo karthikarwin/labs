@@ -1,0 +1,53 @@
+.user-container {
+    width: 100%;
+    height:auto;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+.sidebar {
+    width: 220px;
+    background: #ddd;
+    min-height: calc(100vh - 62px);
+    position: fixed;
+    left: 0;
+}
+.mainbar {
+    width: calc(100% - 230px);
+    margin-left: 220px;
+}
+
+ng-sidebar-container {
+    min-height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+:host >>> .ng-sidebar {
+    width: 220px;
+    background-color: #ddd;
+    z-index: 9 !important;
+}
+ng-sidebar-container {
+    overflow: inherit !important;
+}
+button {
+    background-color: #ddd;
+    border: 1px solid #bbb;
+    border-left: none;
+}
+
+@media only screen and (max-width: 767px) {
+    /* .sidebar {
+        display: none;
+    }
+    .mainbar {
+        width: 100%;
+        margin:0;
+    } */
+
+    
+    ng-sidebar-container {
+        min-height: 100vh;
+    }
+}

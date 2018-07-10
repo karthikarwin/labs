@@ -1,0 +1,27 @@
+<section class="filter-wrapper">
+  <!-- <div class="keyword-wrapper">
+ <input type="text" id="keyword" placeholder="Search for artists..." autofocus [formControl]="queryField"/>
+   </div>
+ <ul class="filter-select">
+   <li class="filter-select-list" *ngFor="let result of results; let i =index">
+     {{result.code}}
+   </li>
+ <span class="tags"></span>
+ </ul> -->
+ <!-- <input [(ngModel)]="selected"
+       [typeahead]="results"
+       typeaheadOptionField="name"
+       [typeaheadWaitMs]="1000"
+       [formControl]="queryField"
+       class="form-control">
+ </section> -->
+ <input [(ngModel)]="asyncSelected"
+       [typeahead]="dataSource"
+       (typeaheadLoading)="changeTypeaheadLoading($event)"
+       (typeaheadOnSelect)="typeaheadOnSelect($event)"
+       [typeaheadOptionsLimit]="30"
+       [typeaheadWaitMs]="300"
+       typeaheadOptionField="name"
+       placeholder="Enter the Scheme names to search"
+       class="form-control">
+<div *ngIf="typeaheadLoading">Loading</div>

@@ -1,0 +1,152 @@
+<div class="main-section">
+  <div class="main-in">
+    <div class="title">
+      <h5>Switch Transaction</h5>
+      <!-- <div class="buttons">
+        <button>Download Statement</button>
+        <button>New Transaction <fa name="chevron-down"></fa></button>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col col-sm-9">
+        <div class="redemption-form">
+          <form (ngSubmit)="switchTrans()" [formGroup]="switchForm">
+            <div class="my-form-group">
+              <label for="folioNo" class="my-label">Select Folio Number</label>
+              <span class="colon">:</span>
+              <select name="folioNo" id="folioNo" 
+              class="my-form-control"
+              formControlName="folioNo">
+                <option value="">Select Account Number</option>
+                <option value="0">215666</option>
+                <option value="1">8766565</option>
+              </select>
+            </div>
+            <div class="my-form-group">
+              <label for="switchOut" class="my-label">Select a scheme to Switch Out</label>
+              <span class="colon">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <select name="switchOut" id="switchOut" 
+                class="my-form-control"
+                formControlName="switchOut">
+                <option value="">Select a Scheme</option>
+                <option value="0">Scheme 1</option>
+                <option value="1">Scheme 2</option>
+              </select>
+            </div>
+            <hr>
+            <div class="my-form-group">
+              <label class="my-label v-a-t">Switch Option</label>
+              <span class="colon v-a-t">:</span>
+              <div class="my-form-control">
+
+                <label for="full" class="redeem-label">
+                  <input 
+                  type="radio" class="my-form-control radio"
+                  name="switchOption" id="full"
+                  value="full"
+                  formControlName="switchOption">
+                  Full
+                </label>
+
+                <label for="partial" class="redeem-label"><input 
+                  type="radio" class="my-form-control radio" 
+                  name="switchOption" id="partial" 
+                  value="unit"
+                  formControlName="switchOption">Partial</label>
+              </div>
+            </div>
+            <hr>
+            <div class="my-form-group">
+              <label class="my-label v-a-t">Switch Value</label>
+              <span class="colon v-a-t">:</span>
+              <div class="my-form-control">
+
+                <label for="amount" class="redeem-label">
+                  <input 
+                  type="radio" class="my-form-control radio"
+                  name="switchValue" id="amount"
+                  value="amount" 
+                  (change)="isUnits = !isUnits"
+                  formControlName="switchValue">
+                  Amount
+                </label>
+
+                <label for="unit" class="redeem-label"><input 
+                  type="radio" class="my-form-control radio" 
+                  name="switchValue" id="unit" 
+                  value="unit"
+                  (change)="isUnits = !isUnits"
+                  formControlName="switchValue">Unit</label>
+
+                <div class="input-group" *ngIf="!isUnits">
+                  <span class="inputSpan">Rs</span><input type="text" class="red-option" formControlName="amount">
+                  <i class="text-muted">Locked in 30s</i>
+                </div>
+
+                <div class="input-group" *ngIf="isUnits">
+                  <span class="inputSpan">Units</span><input type="text" class="red-option" formControlName="unit">
+                  <i class="text-muted">Locked in 30s</i>
+                </div>
+
+              </div>
+            </div>
+            <hr>
+            <div class="my-form-group">
+              <label class="my-label v-a-t">Select scheme to switch in</label>
+              <span class="colon v-a-t">:</span>
+              <div class="my-form-control">
+                <input list="schemes" name="switchIn" class="my-form-control switchTo"
+                formControlName="switchIn">
+                <datalist name="scheme" id="schemes">
+                  <option value="0">Plan 1</option>
+                  <option value="1">Plan 2</option>
+                </datalist>
+              </div>
+            </div>
+            <div class="my-form-group">
+              <label for="plan" class="my-label">Plan</label>
+              <span class="colon">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <select name="plan" id="plan" class="my-form-control"
+                formControlName="plan">
+                <option value="">Select</option>
+                <option value="0">Plan 1</option>
+                <option value="1">Plan 2</option>
+              </select>
+            </div>
+            <div class="my-form-group">
+              <label for="option" class="my-label">Option</label>
+              <span class="colon">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <select name="option" id="option" class="my-form-control"
+                formControlName="option">
+                <option value="">Select</option>
+                <option value="0">Divident</option>
+                <option value="1">Growth</option>
+              </select>
+            </div>
+            <div class="form-foot">
+              <label for="agree"><input type="checkbox" id="agree" formControlName="agreed">I agree the statement and ...</label>
+              <div class="btns">
+                <button type="submit" class="ok-btn"
+                [disabled]="!switchForm.valid || !agreed">Submit</button>
+                <button type="reset" class="rej-btn">Cancel</button>
+              </div>
+            </div>
+            <div class="otp">
+              <app-otp></app-otp>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col col-sm-3 col-right">
+        <div class="display-units">
+          <p>Available for Redemption</p>
+          <h5>18.65 units - 12,548.52/-</h5>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>
+  

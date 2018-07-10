@@ -1,0 +1,45 @@
+.side-menu  {
+    padding: 10px 5px;
+    overflow-y: auto;
+    height: 80vh;
+}
+.menus {
+    margin: 0;
+    list-style: none;
+    padding:0;
+}
+.menu {
+    padding: 6px 10px;
+    background-color: #bbb;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 15px;
+}
+.menu fa {
+    float: right;
+}
+.menu:hover {
+    background-color: #aaa;
+    color: #fff;
+    cursor: pointer;
+}
+.menu.active {
+    background-color: #999;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+.submenu {
+    padding-left: 10px;
+}
+.submenu li {
+    margin: 5px 0px;
+    list-style-type: none;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.submenu li:hover, .submenu li.active {
+    color: #fff;
+    cursor: pointer;
+    background-color: #999;
+}

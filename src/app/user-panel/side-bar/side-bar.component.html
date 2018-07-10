@@ -1,0 +1,17 @@
+<div class="side-menu">
+  <ul class="menus">
+    <li class="menu" [routerLink]="['home']" routerLinkActive="active">Dashboard</li>
+    <li class="menu" routerLink="portfolio" routerLinkActive="active">Portfolio</li>
+    <li class="menu" routerLink="/investment/new-investment" routerLinkActive="active">Invest Now</li>
+    <li class="menu" routerLink="redemption" routerLinkActive="active">Redemptions</li>
+    <li class="menu" routerLink="switch" routerLinkActive="active">Switch</li>
+    <li class="menu" (click)="portSub = !portSub">Periodic Transactions <fa name="angle-down"></fa></li>
+      <ul class="submenu" *ngIf="portSub">
+        <li routerLink="sip-register" routerLinkActive="active">SIP Registrations</li>
+        <li routerLink="transfer" routerLinkActive="active">Systematic Transfer</li>
+        <li routerLink="withdrawal" routerLinkActive="active">Systematic Withdrawal</li>
+      </ul>
+    <li class="menu" routerLink="profile" routerLinkActive="active">Profile</li>
+    <li class="menu" routerLink="settings" routerLinkActive="active">Settings</li>
+  </ul>
+</div>

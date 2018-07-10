@@ -1,0 +1,175 @@
+<div class="container">
+  <section class="acc-setup-sec">
+    <div class="acc-setup-sec-in">
+
+      <div class="row as-row">
+        <div class="col-4 col-md-4" 
+            [ngClass]="{'tabActive': PANClassActive, 'tabCompleted': PANClassCompleted}">
+          <p>
+            <span>1</span>
+            PAN CARD
+          </p>
+        </div>
+        <div class="col-4 col-md-4" [ngClass]="{'tabActive': aadharClassActive, 'tabCompleted': aadharClassCompleted}">
+          <p>
+            <span>2</span>
+            AADHAAR CARD
+          </p>
+        </div>
+        <div class="col-4 col-md-4" [ngClass]="{'tabActive': bankClassActive, 'tabCompleted': bankClassCompleted}">
+          <p>
+            <span>3</span>
+            BANK DETAILS
+          </p>
+        </div>
+      </div>
+     
+    </div>
+    <div class="detailsSec">
+      <form (ngSubmit)="saveCusBankDetails()" 
+      [formGroup]="accountInfo" id="bankDetailsForm" class="row">
+      <div class="col-12 col-md-4 col">
+        <div class="form-group">
+          <ngx-loading [show]="loadingPAN" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+          <input type="text" name="inputPan" id="inputPan"
+            class="form-control"
+            placeholder="AxxPxxxx"
+            maxlength="10"
+            style="text-transform:uppercase"
+            (focus)="panBlur = false"
+            (blur)="panBlur = true; validatePAN($event)"
+            formControlName="panNumber"/>
+
+          <div *ngIf="accountInfo.get('panNumber').invalid && (accountInfo.get('panNumber').dirty || accountInfo.get('panNumber').touched) && panBlur"
+              class="text-danger">
+            <div *ngIf="accountInfo.get('panNumber').errors.required">
+              <small> PAN is required</small>
+            </div>
+            <div *ngIf="accountInfo.get('panNumber').errors.pattern">
+            <small>Enter valid PAN</small>
+            </div>
+          </div>
+          <div class="aadhaarTick text-center" *ngIf="isPanValid">
+            <i class="fa fa-check mb-4"></i>
+            <h5 class="mb-4">Congratulations!</h5>
+            <p class="mb-4">You have verified your PAN successfully </p>
+          </div>
+          <div class="aadhaarwrong text-center" *ngIf="isPanInvalid">
+            <i class="fa fa-warning mb-4"></i>
+            <p class="mb-4">Not able to validate Online </p>
+            <button class="btn btn-info btn-sm">RETRY</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col">
+        <div class="form-group">
+          <ngx-loading [show]="loadingaadhaar" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+          <input type="text" name="inputaadhaar" id="inputaadhaar"
+            class="form-control"
+            placeholder="9999 9999 9999" 
+            (focus)="aadharBlur = false"
+            (blur)="aadharBlur = true; validateaadhaar($event)"
+            maxlength="12"
+            formControlName="aadharNumber"/>
+
+              <div *ngIf="accountInfo.get('aadharNumber').invalid && (accountInfo.get('aadharNumber').dirty || accountInfo.get('aadharNumber').touched) && aadharBlur"
+              class="text-danger">
+                <div *ngIf="accountInfo.get('aadharNumber').errors.required">
+                  <small>Aadhaar is required</small> 
+                </div>
+                <div *ngIf="accountInfo.get('aadharNumber').errors.pattern">
+                  <small>Enter valid Aadhaar</small> 
+                </div>
+              </div>
+
+          <div class="aadhaarTick text-center"  *ngIf="isaadhaarValid">
+            <i class="fa fa-check mb-4"></i>
+            <h5 class="mb-4">Congratulations!</h5>
+            <p class="mb-4">You have verified your Aadhaar successfully </p>
+          </div>
+          <div class="aadhaarwrong text-center" *ngIf="isaadhaarInvalid">
+              <i class="fa fa-warning mb-4"></i>
+              <p class="mb-4">Not able to validate Online </p>
+              <button class="btn btn-info btn-sm">RETRY</button>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col">
+        <ngx-loading [show]="loadingBank" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+          <div class="form-group">
+             <input class="form-control" list="inputMICR" 
+              name="inputMICR"
+              (focus)="micrBlur = false"
+              (blur)="micrBlur = true;"
+              (change)="getBankByMICR($event)"
+              placeholder="MICR Code" id="inputMICRid"
+              (keyup)="getBanksListMicr()"
+              maxlength="9"
+              formControlName="micrCode">
+              <datalist id="inputMICR" *ngIf="bankList">
+                <option *ngFor="let bank of bankList" [value]="bank.micrNumber">{{ bank.bankName }}, {{ bank.branch }}</option>
+              </datalist>
+
+             <div *ngIf="accountInfo.get('micrCode').invalid && (accountInfo.get('micrCode').dirty || accountInfo.get('micrCode').touched) && micrBlur"
+              class="text-danger">
+                <div *ngIf="accountInfo.get('micrCode').errors.pattern">
+                  <small>Enter valid MICR</small> 
+                </div>
+             </div>
+
+          </div>
+          <div class="text-center pb-3">OR</div>
+          <div class="form-group">
+              <input class="form-control" list="inputIFSC" 
+              name="inputIFSC"
+              (focus) = "ifscBlur = false"
+              (blur)="ifscBlur = true;"
+              (change)="getBankByIFSC($event)"
+              placeholder="IFSC Code" id="inputIFSCid"
+              (keyup)="getBanksListIfsc()"
+              maxlength="11"
+              formControlName="ifscCode">
+              <datalist id="inputIFSC" *ngIf="bankList">
+                <option *ngFor="let bank of bankList" [value]="bank.ifscCode">{{ bank.bankName }}, {{ bank.branch }}</option>
+              </datalist>
+          </div>
+          <div class="form-group">
+            <fieldset disabled>
+                <input type="text" class="form-control" 
+                name="inputBank"
+                placeholder="Bank name" 
+                id="inputBank"
+                formControlName="bankName"/>
+            </fieldset>
+          </div>
+          <div class="form-group">
+            <fieldset disabled>
+                <input type="text" class="form-control" 
+                name="inputBranch"
+                placeholder="Branch" id="inputBranch"
+                formControlName="branchName"/>
+            </fieldset>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="inputAccNo"
+              placeholder="Account Number" id="inputAccNo" 
+              (keypress)="onlyNumber($event)"
+              maxlength="12"
+              formControlName="accountNumber"/>
+          </div>
+          <div class="form-group">
+            <select class="form-control" name="inputAcctype" id="inputAcctype"
+            formControlName="accountType">
+                <option value="">Select Account Type</option>
+                <option *ngFor="let type of types" [value]="type.accountTypeID">{{ type.accountType }}</option>
+            </select>
+          </div>
+          <input type="submit" class="btn btn-primary" id="btnSbt"  
+           value="Submit"
+           [disabled]="!accountInfo.valid"
+           name="btnSbt">
+      </div>
+    </form>
+    </div>
+  </section>
+</div>

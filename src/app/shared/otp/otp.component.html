@@ -1,0 +1,33 @@
+<div class="otp-box card">
+  <h6 class="card-header">
+    OTP Submission
+  </h6>
+  <div class="card-body">
+    <form (ngSubmit)="submitOtp()" [formGroup]="otpForm">
+      <div class="form-group" *ngIf="show">
+        <label for="recieveVia">How do you want to receive OTP :</label>
+        <div class="radios">
+          <label for="email">
+            <input type="radio" value="email" name="otpVia" id="email" formControlName="otpVia">Email
+          </label>
+          <label for="mobile">
+            <input type="radio" value="mobile" id="mobile" name="otpVia" formControlName="otpVia">Mobile
+          </label>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="!show">
+        <small class="text-success">OTP has been sent to your {{otpForm.get('otpVia').value}} successfully. </small>
+        <small>Click <span class="badge badge-dark" (click)="otpForm.get('otpVia').value = ''; show = true">here</span> to resend</small>
+        <label for="otpCode">Enter OTP :</label>
+        <div class="otp-box">
+          <input type="text" name="otpCode" formControlName="otpCode" maxlength="4">
+        </div>
+      </div>
+      <div class="form-group" *ngIf="!show">
+        <button class="btn ok-btn" [disabled]="!otpForm.valid">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

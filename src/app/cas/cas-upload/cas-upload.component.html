@@ -1,0 +1,101 @@
+<div class="main-section">
+  <div class="main-in">
+    <div class="title">
+      <ngx-loading [show]="loadingBank" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+      
+      <h5 class="text-center">Statement Upload</h5>
+      <!-- <div class="buttons">
+        <button>Download Statement</button>
+        <button>New Transaction <fa name="chevron-down"></fa></button>
+      </div> -->
+    </div>
+    <div class="row casSec">
+      <div class="col-12 col-md-4">
+        <div class="casForm">
+          <div class="card bg-secondary text-white">
+            <div class="card-header">
+              <h4>CAS Report Preview</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="pdfForm" (ngSubmit)="savePdf()" enctype="multipart/form-data" (keydown)="keyDownFunction($event)">
+                <div class="form-group">
+                  <label for="exampleFormControlFile1">Upload a CAS file mailed to you.</label>
+                  <input type="file" id="file" name="pdfFile" 
+                  (change)="onfileSelected($event)"
+                  accept="application/pdf">
+                  <input type="hidden" formControlName="pdfFile">
+                </div>
+                <div class="form-group">
+                  <label for="CASPassword" *ngIf="!shwUpldBtn">Please enter the password for the file</label>
+                  <div id="password-container">
+                    <input class="form-control" type="password" id="pdf-password" 
+                    placeholder="Password" name="pdfPassword"
+                    *ngIf="!shwUpldBtn"
+                    formControlName="pdfPassword"
+                    required/>
+                    <div id="password-message"></div>
+                  </div>
+                </div>
+                <button type="button" id="submit-password" 
+                class="btn btn-primary btn-block" (click)="onFileSelected()"
+                *ngIf="!shwUpldBtn">
+                  Preview
+                </button>
+                <br>
+  
+                <button type="submit" class="btn btn-success btn-block"
+                       *ngIf="shwUpldBtn" [disabled]="!pdfForm.valid">
+                  Upload PDF
+                </button>
+               
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12 col-md-8">
+        <pdf-viewer [src]="pdfSrc" [render-text]="true" (error)="onError($event)" [original-size]="originalSize" [fit-to-page]="fitToPage"
+        (after-load-complete)="setRightPassword()"
+          style="display: block;" (after-load-complete)="check($event)">
+        </pdf-viewer>
+      </div>
+  
+  
+    </div>
+  
+    <div class="pdfHelpModel-sec">
+      <div class="row">
+        <div class="col-10 col-md-8 offset-md-2 offset-1">
+          <!-- Button trigger modal -->
+          
+  
+          <!-- Modal -->
+          <div class="modal-backdrop fade in" [style.display]="showModal ? 'block' : 'none'"></div>
+          <div class="modal" tabindex="-1" role="dialog" style="display: block" [style.display]="showModal ? 'block' : 'none'">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelAction()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <p class="pt-5 px-5">
+                    We would request you to upload "Consolidated Account Statement(CAS)", so that we will guide you to earn more wealth.
+                  </p>
+                  <div class="d-flex pl-5 ">
+                    <small class="font-weight-bold">Not sure about "Consolidated Account Statement" ?</small>
+                    <a class="small font-weight-bold" routerLink="/casinfo"> Click here</a>
+                  </div>
+                  <div class="pb-5 px-5 mt-3">
+                  <button type="button" routerLink="/invdetails" class="btn btn-primary btn-block">Take me to new Investment</button>
+  
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

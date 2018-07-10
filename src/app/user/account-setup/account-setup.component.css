@@ -1,0 +1,98 @@
+.as-row {
+    border: 3px solid black;
+    border-radius: 5px;
+    text-align: center;
+    margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0px;
+    margin-bottom: 20px;
+}
+.as-row p {
+    margin:0;
+}
+
+.as-row span {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: grey;
+    margin-right: 5px;
+}
+.detailsSec .col {
+    padding: 10px 30px;
+    border-right: 3px solid black;
+} 
+
+.detailsSec .col:last-child {
+    border-right: none;
+}
+
+.aadhaarTick {
+    margin-top: 50px;
+}
+
+.aadhaarTick i{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: green;
+    border-radius: 50%;
+}
+
+.aadhaarwrong {
+    margin-top: 50px;
+
+}
+
+.aadhaarwrong i{
+    font-size: 40px;
+    color: rgb(235, 177, 18);
+}
+
+.tabActive {
+    color: green;
+}
+.tabActive span {
+    background-color: green;
+    color:#fff;
+}
+
+.tabCompleted {
+    color: rgb(14, 130, 175);
+}
+
+.tabCompleted span {
+    background-color: rgb(14, 130, 175);
+    color:#fff;
+
+}
+#bankDetailsForm {
+    width: 100%;
+    display: flex;
+}
+#btnSbt {
+    float: right;
+}
+
+@media only screen and (max-width: 767px) {
+    .as-row p {
+        font-size: 14px;
+    }
+
+    .detailsSec .col {
+        border-right: none;
+    }
+    form.row {
+        margin: 0;
+    }
+}
+
+
+

@@ -1,0 +1,148 @@
+<ngx-loading [show]="loadingBank" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<div class="container">
+  <div class="signupSec">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 d-none d-sm-none d-md-block">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="../../assets/images/inv2.jpg" alt="First slide" height="515px;">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="../../assets/images/investment3.jpg" alt="Second slide" height="515px;">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 mblmargin">
+        <div class="card">
+          <div class="card-header text-center">
+            <h6>NEW USER - SIGN UP</h6>
+          </div>
+          <div class="card-body client">
+            
+            <form [formGroup]="signUpForm" (ngSubmit)="signUp()" *ngIf="!showWelcomeMsgSec">
+              <div class="form-group">
+                <div>
+                  <input type="email" 
+                    autofocus class="form-control" 
+                    id="signupEmail"
+                    placeholder="example@user.com"
+                    (focus)="emailBlur = false"
+                    (blur)="emailBlur = true"
+                    formControlName="email">
+                </div>
+                <div *ngIf="(signUpForm.get('email').touched || signUpForm.get('email').dirty) && !signUpForm.get('email').valid && emailBlur">
+                  <small *ngIf="signUpForm.get('email').errors.required">Email ID is required</small>
+                  <small *ngIf="signUpForm.get('email').errors.pattern">Enter valid email</small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <input type="text" class="form-control" 
+                    id="inputName" 
+                    name="inputName"     
+                    placeholder="Name"
+                    (focus)="nameBlur = false"
+                    (blur)="nameBlur = true"
+                    formControlName="name">
+                </div>
+                <div *ngIf="(signUpForm.get('name').touched || signUpForm.get('name').dirty) && !signUpForm.get('name').valid && nameBlur">
+                  <small *ngIf="signUpForm.get('name').errors.required">User Name is required</small>
+                  <small *ngIf="signUpForm.get('name').errors.minlength">Name should be atleast 3 characters</small>
+                </div>
+              </div>
+              <div formGroupName="passwords">
+              <div class="form-group">
+                <div>
+                  <input type="password" class="form-control" 
+                    id="inputPassword" name="inputPassword" placeholder="Password"
+                    (focus)="passBlur = false"
+                    (blur)="passBlur = true"
+                    formControlName="password">
+                </div>
+                <div *ngIf="(signUpForm.get('passwords.password').touched || signUpForm.get('passwords.password').dirty) && !signUpForm.get('passwords.password').valid && passBlur">
+                  <small *ngIf="signUpForm.get('passwords.password').errors.required">Password is required</small>
+                  <small *ngIf="signUpForm.get('passwords.password').errors.minlength">Password should have atleast 6 characters</small>
+                  <small *ngIf="signUpForm.get('passwords.password').errors.maxlength">Password should not be more than 16 characters</small>
+                  <small *ngIf="signUpForm.get('passwords.password').errors.pattern">Password should contain atleast one capital & small alphabet, a numeric character and a special character</small>
+                </div>
+              </div>
+              <div class="form-group ">
+                <div>
+                  <input type="password" class="form-control" 
+                    id="cnfPassword" name="cnfPassword"
+                    placeholder="Confirm password"
+                    (focus)="cnfPassBlur = false"
+                    (blur)="cnfPassBlur = true"
+                    formControlName="cnfPassword">
+                </div>
+                <div *ngIf="(signUpForm.get('passwords.cnfPassword').touched || signUpForm.get('passwords.cnfPassword').dirty) && !signUpForm.get('passwords.cnfPassword').valid && cnfPassBlur">
+                  <small *ngIf="signUpForm.get('passwords.cnfPassword').errors.required">Confirm Password is required</small>
+                </div>
+                <small *ngIf="signUpForm.get('passwords').errors">Passwords doesn't match</small>
+              </div>
+              </div>
+              <div class="form-group ">
+                <div>
+                  <input type="text" class="form-control" 
+                    id="inputPhone" name="inputPhone"
+                    placeholder="+91 9999999999"
+                    (keypress)="onlyNumber($event)"
+                    (focus)="phoneBlur = false"
+                    (blur)="phoneBlur = true"
+                    maxlength="10"
+                    formControlName="mobile">
+                </div>
+                <div *ngIf="(signUpForm.get('mobile').touched || signUpForm.get('mobile').dirty) && !signUpForm.get('mobile').valid && phoneBlur">
+                  <small *ngIf="signUpForm.get('mobile').errors.required">Mobile Number is required</small>
+                  <small *ngIf="signUpForm.get('mobile').errors.minlength || signUpForm.get('mobile').errors.maxlength">Enter correct Mobile Number</small>
+                </div>
+              </div>
+
+
+              <div class="form-group ">
+                <div class="mycaptcha" style="">
+                  <re-captcha formControlName="recaptchaReactive"
+                  siteKey="6LeGBUoUAAAAAMOERcAsj_ezaN8zhpYqj7eMRQA2">
+                  </re-captcha>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <div>
+                  <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid && !btnClicked">
+                    Register
+                  </button>
+                </div>
+                <br>
+                <p class="text-center">Already an user <a routerLink="/user/login">Login Now</a></p>
+              </div>
+            </form>
+            <div class="welcomeMsgSec" *ngIf="showWelcomeMsgSec">
+              <p class="text-center">
+                Thank you and welcome! You are 3 steps away from setting up your investment account
+              </p>
+              <h4 class="alert alert-secondary ">{{userMailId}}
+              </h4>
+              <p>
+                A validation link has been mailed to your id. Kindly validate by clicking on the link. This is for an enhanced security for
+                all our clients. Thanks for understanding.
+              </p>
+              <button type="button" class="btn btn-primary" (mousedown)="goToLogin()">Login Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

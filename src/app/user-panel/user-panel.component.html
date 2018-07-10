@@ -1,0 +1,19 @@
+<div class="user-container">
+  <ng-sidebar-container>
+    <ng-sidebar [(opened)]="_opened" [mode]="'push'">
+      <!-- <div class="sidebar"> -->
+        <!-- <a closeSidebar>Closes the sidebar</a> -->
+        <app-side-bar></app-side-bar>
+      <!-- </div> -->
+    </ng-sidebar>
+    <div ng-sidebar-content>
+      <button (click)="_toggleSidebar()">
+        <span><fa name="bars"></fa></span>
+      </button>
+      <!-- <div class="mainbar"> -->
+        <router-outlet></router-outlet>
+      <!-- </div> -->
+    </div>
+  </ng-sidebar-container>
+</div>
+

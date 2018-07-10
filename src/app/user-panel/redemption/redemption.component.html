@@ -1,0 +1,105 @@
+<div class="main-section">
+  <div class="main-in">
+    <div class="title">
+      <h5>Redemption</h5>
+      <!-- <div class="buttons">
+        <button>Download Statement</button>
+        <button>New Transaction <fa name="chevron-down"></fa></button>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-9">
+        <div class="redemption-form">
+          <form (ngSubmit)="submitRedemption()" [formGroup]="redemptionForm">
+            <div class="my-form-group">
+              <label for="folioNo" class="my-label">Select Folio Number</label>
+              <span class="colon">:</span>
+              <select name="folioNo" id="folioNo" 
+              class="my-form-control"
+              formControlName="folioNo">
+                <option value="">Select Account Number</option>
+                <option value="0">215666</option>
+                <option value="1">8766565</option>
+              </select>
+            </div>
+            <div class="my-form-group">
+              <label for="scheme" class="my-label">Select a scheme to Redeem</label>
+              <span class="colon">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <select name="scheme" id="scheme" 
+                class="my-form-control"
+                formControlName="scheme">
+                <option value="">Select a Scheme</option>
+                <option value="0">Scheme 1</option>
+                <option value="1">Scheme 2</option>
+              </select>
+            </div>
+            <hr>
+            <div class="my-form-group">
+              <label for="scheme" class="my-label v-a-t">Redemption Option</label>
+              <span class="colon v-a-t">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <div class="my-form-control">
+
+                <label for="amount" class="redeem-label"><input 
+                  type="radio" class="my-form-control radio"
+                  name="redOpt" id="amount"
+                  value="amount" 
+                  (change)="isUnits = !isUnits"
+                  formControlName="redOpt">Amount</label>
+
+                <label for="unit" class="redeem-label"><input 
+                  type="radio" class="my-form-control radio" 
+                  name="redOpt" id="unit" 
+                  value="unit"
+                  (change)="isUnits = !isUnits"
+                  formControlName="redOpt">Unit</label>
+
+                <div class="input-group" *ngIf="!isUnits">
+                  <span class="inputSpan">Rs</span><input type="text" class="red-option" formControlName="amount">
+                  <i class="text-muted">Locked in 30s</i>
+                </div>
+
+                <div class="input-group" *ngIf="isUnits">
+                  <span class="inputSpan">Units</span><input type="text" class="red-option" formControlName="unit">
+                  <i class="text-muted">Locked in 30s</i>
+                </div>
+
+              </div>
+            </div>
+            <hr>
+            <div class="my-form-group">
+              <label for="scheme" class="my-label">Select preferred bank for redemption details</label>
+              <span class="colon">:</span>
+              <!-- <input type="text" class="my-form-control" id="scheme"> -->
+              <select name="scheme" id="scheme" class="my-form-control"
+                formControlName="bank">
+                <option value="">Select Bank</option>
+                <option value="0">Axis Bank</option>
+                <option value="1">ICICI Bank</option>
+              </select>
+            </div>
+            <div class="form-foot">
+              <label for="agree"><input type="checkbox" id="agree" formControlName="agreed">I agree the statement and ...</label>
+              <div class="btns">
+                <button type="submit" class="ok-btn"
+                [disabled]="!redemptionForm.valid || !agreed">Submit</button>
+                <button type="reset" class="rej-btn">Cancel</button>
+              </div>
+            </div>
+            <div class="otp">
+              <app-otp></app-otp>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-12 col-sm-3 col-right">
+        <div class="display-units">
+          <p>Available for Redemption</p>
+          <h5>18.65 units - 12,548.52/-</h5>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>
+  

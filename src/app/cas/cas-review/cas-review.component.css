@@ -1,0 +1,90 @@
+.main-section {
+    padding: 15px;
+}
+.main-in {
+    padding: 20px;
+    background-color: #ddd;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.ok-btn {
+    background-color: #000;
+    color: #fff;
+}
+
+.buttons-sec {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewCAS-header {
+    display: flex;
+    justify-content: space-around;
+}
+
+table tr td {
+	font-size: 14px !important;
+}
+.reviewCAS-tbl-sec {
+    padding:30px;
+    background-color: #fff;
+}
+.header-card {
+    padding: 10px;
+    border: 1px solid #bbb;
+    margin:0px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+.header-card .col {
+    width: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .header-card .col-12 {
+        text-align: left !important;
+        padding: 0;
+    }
+    .reviewCAS-head h5 {
+        font-size: 0.9rem;
+    }
+    .reviewCAS-tbl-sec {
+        padding:15px;
+    }
+    .buttons-sec {
+        flex-wrap: wrap;
+    }
+    .form-check {
+        flex: 0 0 100%;
+    }
+    .btns {
+        flex: 0 0 100%;
+    }
+    .form-check #exampleCheck1 {
+        width: 9%;
+        display: inline-block;
+        margin-right: -4px;
+    }
+    .form-check label {
+        width: 91%;
+        vertical-align: top;
+        display: inline-block;
+        margin-right: -1px;
+    }
+    .alt-table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        overflow-x: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #dddddd;
+        -webkit-overflow-scrolling: touch;
+    }
+    .table .thead-dark th {
+        min-width: 200px;
+    }
+}

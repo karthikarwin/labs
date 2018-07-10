@@ -1,0 +1,327 @@
+<ngx-spinner></ngx-spinner>
+<div class="main-section">
+  <div class="main-in">
+    <div class="title">
+      <h5>SIP Registration</h5>
+      <!-- <div class="buttons">
+        <button>Download Statement</button>
+        <button>New Transaction <fa name="chevron-down"></fa></button>
+      </div> -->
+    </div>
+    <div class="row steps">
+      <div class="col col-xs-4 text-center" 
+      [ngClass]="{'tabActive': firstStepActive, 'tabCompleted': firstStepCompleted}">
+        <span class="step">1</span>
+        Select Schemes
+      </div>
+      <div class="col col-xs-4 text-center" [ngClass]="{'tabActive': secondStepActive, 'tabCompleted': secondStepCompleted}">
+        <span class="step">2</span>
+        Payment Details
+      </div>
+      <div class="col col-xs-4 text-center" [ngClass]="{'tabActive': thirdStepActive, 'tabCompleted': thirdStepCompleted}">
+        <span class="step">3</span>
+        Transcation Details
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-9">
+        <div class="step1 step-view" *ngIf="step1">
+          <div class="step-view-in">
+            <div class="protfolio">
+              <select name="qlAccountNo" id="qlAccNo" (change)="setFolio($event)">
+                <option value="0">Create New Account</option>
+                <option value="121212">121212</option>
+              </select>
+            </div>
+            <div class="search">
+              <!-- <input placeholder="Start type Scheme Names here"
+              (keyup)="getSchemes($event)" list="schemesList">
+              <ul id="dropDown" *ngIf="schemesResp">
+                <li *ngFor="let scheme of schemes; let i=index" (click)="selectScheme(scheme)">{{scheme.name}}</li>
+              </ul> -->
+              <!-- <datalist id="schemesList" *ngIf="schemes">
+                <option *ngFor="let scheme of schemes; let i=index" [value]="scheme.name"></option>
+              </datalist> -->
+              <input [(ngModel)]="asyncSelected"
+                [typeahead]="dataSource"
+                (typeaheadLoading)="changeTypeaheadLoading($event)"
+                (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                [typeaheadOptionsLimit]="30"
+                [typeaheadWaitMs]="300"
+                typeaheadOptionField="name"
+                placeholder="Enter the Scheme names to search"
+                class="form-control">
+              <div *ngIf="typeaheadLoading">Loading</div>
+            </div>
+            <div class="search-results">
+              <!-- <ul class="schemes" *ngIf="schemes">
+                <li class="scheme" *ngFor="let scheme of schemes">
+                  {{scheme.name}}
+                  <button (click)="selectScheme(scheme)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                </li>
+              </ul> -->
+            </div>
+            <div class="pagination" align="right">
+              <ul class="pages">
+                <li class="page"><fa name="backward"></fa></li>
+                <li class="page"><fa name="step-backward"></fa></li>
+                <li class="page">1</li>
+                <li class="page">2</li>
+                <li class="page">3</li>
+                <li class="page">4</li>
+                <li class="page">5</li>
+                <li class="page"><fa name="step-forward"></fa></li>
+                <li class="page"><fa name="forward"></fa></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step2 step-view" *ngIf="step2 && sipAllowed">
+          <div class="redemption-form">
+            <form (ngSubmit)="sendMandate()" [formGroup]="sipPaymentForm">
+              
+              <div class="my-form-group">
+                <label for="sipFrequency" class="my-label">SIP Frequency</label>
+                <span class="colon">:</span>
+                <!-- <input type="text" class="my-form-control" id="scheme"> -->
+                <select name="sipFrequency" id="sipFrequency" class="my-form-control"
+                (change)="selectedFreq($event)"
+                  formControlName="sipFrequency">
+                  <option value="">Select Frequency</option>
+                  <option *ngFor="let freq of sipFrequencies; let i=index" [value]="freq">{{freq}}</option>
+                </select>
+              </div>
+              <hr>
+              <div class="my-form-group" *ngIf="entAmount">
+                <label class="my-label v-a-t">Enter Amount</label>
+                <span class="colon v-a-t">:</span>
+                <div class="input-group my-form-control date-group">
+                  <input type="text" class="my-form-control date" formControlName="sipAmount" (blur)="checkMinBal($event)">
+                  <span>Min Rs.{{minAmount}} /-</span>
+                </div>
+              </div>
+              <hr>
+              <div class="my-form-group" *ngIf="entSipDate">
+                <label for="sipDate" class="my-label">SIP Date</label>
+                <span class="colon">:</span>
+                <select name="sipDate" id="sipDate"
+                  class="my-form-control"
+                  (change)="checkFInDate($event)"
+                  formControlName="sipDate" #sipDate>
+                  <option value="">Select</option>
+                  <option *ngFor="let iDate of invDates" [value]="iDate">{{iDate}}</option>
+                </select>
+              </div>
+              <hr>
+              <div class="my-form-group" *ngIf="entFIDate">
+                <label class="my-label v-a-t">First Installment Month & Year</label>
+                <span class="colon v-a-t">:</span>
+                <!-- <div class="input-group my-form-control date-group">
+                  <input type="text" class="my-form-control date" 
+                  bsDatepicker
+                  #dp1="bsDatepicker"
+                  [bsConfig]="{ dateInputFormat: dateFormat }">
+                  <span class="inputSpan cal" (click)="dp1.toggle()"><fa name="calendar"></fa></span><br>
+                  <span><i class="text-info">SIP registration takes time and hence please choose a start date after atleast 30 days</i></span>
+                </div> -->
+                <div class="input-group my-form-control date-group" *ngIf="!notAnyDate">
+                  <select name="month" id="month" #fInsMonth (change)="fInsMonthh($event)">
+                    <option value="">Select Month</option>
+                    <option *ngFor="let month of monthss; let i = index" [value]="i + currentMonth + 1">{{month}}</option>
+                  </select>
+                  <select name="year" id="year" #fInsYear (change)="fInsYearr($event)">
+                      <option value="">Select Year</option>
+                      <option *ngFor="let year of years; let i = index" [value]="year">{{year}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="my-form-group" *ngIf="entLIDate">
+                <label class="my-label v-a-t">Last Installment Date</label>
+                <span class="colon v-a-t">:</span>
+                <div class="input-group my-form-control date-group" *ngIf="!notAnyDate">
+                  <select name="month" id="month" #fInsMonth (change)="lInsMonthh($event)">
+                    <option value="">Select Month</option>
+                    <option *ngFor="let month of monthss; let i = index" [value]="i + currentMonth + 1">{{month}}</option>
+                  </select>
+                  <select name="year" id="year" #fInsYear (change)="lInsYearr($event)">
+                      <option value="">Select Year</option>
+                      <option *ngFor="let year of years; let i = index" [value]="year">{{year}}</option>
+                  </select>
+                </div>
+              </div>
+              <hr>
+              <div class="my-form-group" *ngIf="entBank">
+                <label for="bank" class="my-label">Select preferred bank for SIP</label>
+                <span class="colon">:</span>
+                <select name="bank" id="bank" 
+                  class="my-form-control"
+                  formControlName="bank">
+                  <option value="">Select Bank</option>
+                  <option *ngFor="let bank of custBanks" [value]="bank.bankId">{{bank.bankName}} - {{bank.branchName}}</option>
+                </select>
+              </div>
+              <div class="form-foot">
+                <label for="agree"><input type="checkbox" id="agree" formControlName="agreed">I agree the statement and ...</label>
+                <div class="btns" *ngIf="!proceedOtp">
+                  <button type="submit" class="ok-btn"
+                  [disabled]="!sipPaymentForm.valid || !agreed">Submit</button>
+                  <button type="reset" class="rej-btn">Cancel</button>
+                </div>
+              </div>
+            </form>
+            <div class="row" *ngIf="proceedOtp">
+              <div class="otp" *ngIf="!otpSuccess">
+                <app-otp (otpResp)="otpResponse($event)"></app-otp>
+              </div>
+              <div class="otp" *ngIf="otpSuccess">
+                <span class="text-success">OTP Applied Successfully</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step2 noSip step-view" *ngIf="step2 && !sipAllowed">
+          <div style="padding: 15px; text-align: center">
+            <h4>Sorry SIP is not allowed for this scheme</h4>
+            <p routerLink="/investment">Click here to pay as LUMPSUM</p>
+            <p (click)="showStep1()">Select Other scheme</p>
+          </div>
+        </div>
+
+        <div class="step3 step-view" *ngIf="step3">
+          <div class="redemption-form" *ngIf="!response">
+            <form (ngSubmit)="sendMandate()" [formGroup]="mandateForm">
+              
+              <div class="my-form-group">
+                <label class="my-label v-a-t">Select a type</label>
+                <span class="colon v-a-t">:</span>
+                <div class="my-form-control">
+  
+                  <label for="physical" class="redeem-label">
+                    <input 
+                    type="radio" class="my-form-control radio"
+                    name="mandateType" id="physical"
+                    value="0"
+                    formControlName="mandateType">
+                    Physical Mandate
+                  </label>
+  
+                  <label for="electronic" class="redeem-label">
+                    <input 
+                      type="radio" class="my-form-control radio" 
+                      name="mandateType" id="electronic" 
+                      value="1"
+                      formControlName="mandateType">eMandate</label>
+                </div>
+              </div>
+              <hr>
+              <div *ngIf="isPhyMandate">
+                <div class="my-form-group">
+                  <div class="madate-preview">
+                    <div class="preview"></div>
+                    <div class="btns">
+                      <button type="button" class="ok-btn">Download</button>
+                      <button type="reset" class="ok-btn">Print</button>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                  <label class="my-label v-a-t">Select a type</label>
+                  <span class="colon v-a-t">:</span>
+                  <div class="my-form-control">
+                    <input type="file" name="mandateFile" (change)="onFileChange($event)" class="fileInp">
+                    <input type="hidden" name="fileInput" formControlName="fileInput"/>
+                    <button type="button" class="ok-btn">Upload</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!isPhyMandate">
+                <div class="payment">
+                  <button type="button" (click)="goToPay()">Pay Now</button>
+                </div>
+              </div>
+              <div class="form-foot">
+                <label for="agree"><input type="checkbox" id="agree" formControlName="mandateAgreed">I agree the statement and ...</label>
+                <div class="btns">
+                  <button type="submit" class="ok-btn"
+                  [disabled]="!mandateForm.valid || !mandateAgreed">Submit</button>
+                  <button type="reset" class="rej-btn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="transactionDetails-sec mb-5 text-center" *ngIf="response">
+            <div class="card bg-light">
+              <!-- For Error Response-->
+              <div class="card-body" *ngIf="failure">
+                <fa name="times" class="fa fail"></fa>
+                <p>Transaction Failed. your Ref No: {{responseObj.merchantTransactionIdentifier}}</p>
+                <p>
+                  Payment transaction Failure. Dated {{responseObj.paymentMethod.paymentTransaction.dateTime}}
+                </p>
+                <button class="btn btn-primary" routerLink="/welcome">CONTINUE TO YOUR DASH BOARD</button>
+              </div>
+
+              <div class="card-body" *ngIf="!failure">
+                <fa name="check" class="fa succ"></fa>
+                <p>Thank you for your investment. your Ref No: {{responseObj.merchantTransactionIdentifier}}</p>
+                <p>
+                  Payment transaction successful. Dated {{responseObj.paymentMethod.paymentTransaction.dateTime}}
+                </p>
+                <button class="btn btn-primary" routerLink="/welcome">CONTINUE TO YOUR DASH BOARD</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 col-right">
+        <div class="selected-scheme" *ngIf="selectedSchemeName">
+          <p>Selected Scheme &nbsp;&nbsp; <span class="text-muted" (click)="showStep1()">Modify</span></p>
+          
+          <hr>
+          <h6>{{selectedSchemeName}}</h6>
+          <br>
+          <br>
+          <div *ngIf="selectedScheme">
+            <p>Plan Options</p>
+            <hr>
+            <h6 class="optionss">Investment Option : {{selectedScheme.invOption}}</h6>
+            <h6 class="optionss">Plan Name : {{selectedScheme.planName}}</h6>
+          </div>
+        </div>         
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedScheme">
+        <div class="options">
+          <select name="plan" id="plan" class="form-control">
+            <option value="growth">{{selectedScheme.invOption}}</option>
+          </select>
+          <br>
+          <select name="options" id="options" class="form-control">
+            <option value="growth">{{selectedScheme.planName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" aria-label="Close" (click)="showStep2()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    

@@ -1,0 +1,314 @@
+<ngx-spinner></ngx-spinner>
+<div class="main-section">
+  <div class="main-in">
+    <div class="title">
+      <h5 class="text-center">Investment Details</h5>
+      <!-- <div class="buttons">
+        <button>Download Statement</button>
+        <button>New Transaction <fa name="chevron-down"></fa></button>
+      </div> -->
+    </div>
+    <div class="row steps">
+      <div class="col col-xs-4 text-center" 
+      [ngClass]="{'tabActive': firstStepActive, 'tabCompleted': firstStepCompleted}">
+        <span class="step">1</span>
+        Select Schemes
+      </div>
+      <div class="col col-xs-4 text-center" [ngClass]="{'tabActive': secondStepActive, 'tabCompleted': secondStepCompleted}">
+        <span class="step">2</span>
+        Investment Details
+      </div>
+      <div class="col col-xs-4 text-center" [ngClass]="{'tabActive': thirdStepActive, 'tabCompleted': thirdStepCompleted}">
+        <span class="step">3</span>
+        Transcation Details
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-9">
+        <div class="step1 step-view" *ngIf="step1">
+          <div class="step-view-in">
+            <div class="search">
+              <!-- <input placeholder="Start type Scheme Names here"
+              (keyup)="getSchemes($event)" list="schemesList"> -->
+              <!-- <ul id="dropDown" *ngIf="schemesResp">
+                <li *ngFor="let scheme of schemes; let i=index" (click)="selectScheme(scheme)">{{scheme.name}}</li>
+              </ul> -->
+              <!-- <datalist id="schemesList" *ngIf="schemesResp">
+                <option *ngFor="let scheme of schemes; let i=index" [value]="scheme.name"></option>
+              </datalist> -->
+              <!-- <input [(ngModel)]="selected"
+                [typeahead]="states"
+                class="form-control"> -->
+                <input [(ngModel)]="asyncSelected"
+                  [typeahead]="dataSource"
+                  (typeaheadLoading)="changeTypeaheadLoading($event)"
+                  (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                  [typeaheadOptionsLimit]="30"
+                  [typeaheadWaitMs]="300"
+                  typeaheadOptionField="name"
+                  placeholder="Enter the Scheme names to search"
+                  class="form-control">
+                <div *ngIf="typeaheadLoading">Loading</div>
+            </div>
+            
+            <div class="search-results">
+              <!-- <ul class="schemes" *ngIf="schemes">
+                <li class="scheme" *ngFor="let scheme of schemes">
+                  {{scheme.name}}
+                  <button (click)="selectScheme(scheme)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                </li>
+              </ul> -->
+              <div *ngIf="noScheme">
+                <h5>This Scheme is not in approved list, Please search a different Scheme</h5>
+              </div>
+            </div>
+            <div class="pagination" align="right">
+              <!-- <ul class="pages">
+                <li class="page"><fa name="backward"></fa></li>
+                <li class="page"><fa name="step-backward"></fa></li>
+                <li class="page">1</li>
+                <li class="page">2</li>
+                <li class="page">3</li>
+                <li class="page">4</li>
+                <li class="page">5</li>
+                <li class="page"><fa name="step-forward"></fa></li>
+                <li class="page"><fa name="forward"></fa></li>
+              </ul> -->
+              <!-- <div class="btn dashboard">
+                <button class="btn ok-btn" routerLink="/dashboard">
+                  Go to Dashboard
+                </button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="step2 step-view" *ngIf="step2">
+          <div class="row" *ngIf="!proceedOtp">
+            <div class="col col-3">
+              <div class="btn btn-lumpsum" [ngClass]="{ selected: isSelected }" (click)="isSelected = true">
+                LUMPSUM
+              </div>
+            </div>
+            <div class="col col-3" *ngIf="isSipAllowed">
+              <div class="btn btn-lumpsum" [routerLink]="['/dashboard/user/sip-register', selectedScheme.code]">
+                SIP
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!proceedOtp">
+            <div class="col col-9">
+              <div class="my-form-group" *ngIf="isSelected">
+                <label class="my-label v-a-t">Enter Amount</label>
+                <span class="colon v-a-t">:</span>
+                <div class="input-group my-form-control date-group">
+                  <input type="text" class="my-form-control date" [(ngModel)]="amount" (blur)="checkMin()">
+                  <span>Min Rs.{{minAmount}} /-<br></span>
+                  <span style="color:red;">{{ error }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!proceedOtp">
+            <div class="col col-9">
+              <div class="btns">
+                <button type="button" class="ok-btn" (click)="saveLumpsum();" [disabled]="!minAmountOK">Submit</button>
+                <button type="reset" class="rej-btn">Cancel</button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="row" *ngIf="proceedOtp">
+            <div class="col col-9">
+              <div class="otp" *ngIf="!otpSuccess">
+                <app-otp (otpResp)="otpResponse($event)"></app-otp>
+              </div>
+              <div class="otp" *ngIf="otpSuccess">
+                <span class="text-success">OTP Applied Successfully</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step3 step-view" *ngIf="step3">
+          <div class="redemption-form" *ngIf="!response">
+            <div class="paymentDetails-sec mb-5">
+              <div class="card">
+                <div class="card-body">
+                  <div class="selectedScheme">
+                    <h6 class="mr-5">LUMPSUM - <b>{{selectedSchemeName}}</b> - EQUITY Amount: <b><i>{{typedAmount}} INR</i></b></h6>
+                    <p class="text-secondary" (click)="showStep1()">MODIFY</p>
+                  </div>
+                  <div class="payment">
+                    <button (click)="goToPay()">Pay Now</button>
+                  </div>
+                  <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="netbanking-tab" data-toggle="tab"
+                          href="#netbanking" role="tab" aria-controls="netbanking" aria-selected="true">NETBANKING</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="debitcard-tab" data-toggle="tab"
+                          href="#debitcard" role="tab" aria-controls="debitcard" aria-selected="false">DEBITCARD</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="neft-tab" data-toggle="tab"
+                          href="#neft" role="tab" aria-controls="neft" aria-selected="false">NEFT/RTGS</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="investeasy-tab" data-toggle="tab"
+                          href="#investeasy" role="tab" aria-controls="investeasy" aria-selected="false">INVESTEASY</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="upi-tab" data-toggle="tab"
+                          href="#upi" role="tab" aria-controls="upi" aria-selected="false">UPI</a>
+                    </li>
+        
+                  </ul> -->
+                  <!-- <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active myborder" id="netbanking" role="tabpanel"
+                          aria-labelledby="netbanking-tab">
+                          <ul class="banks">
+                            <li class="bank">
+                              <label for="hdfc">
+                                <input type="radio" name="bank" id="hdfc">
+                                HDFC
+                              </label>
+                            </li>
+                            <li class="bank">
+                              <label for="icici">
+                                <input type="radio" name="bank" id="icici">
+                                ICICI
+                              </label>
+                            </li>
+                            <li class="bank">
+                              <label for="axis">
+                                <input type="radio" name="bank" id="axis">
+                                AXIS BANK
+                              </label>
+                            </li>
+                            <li class="bank">
+                              <label for="indian">
+                                <input type="radio" name="bank" id="indian">
+                                Indian Bank
+                              </label>
+                            </li>
+                            <li class="bank">
+                              <label for="iob">
+                                <input type="radio" name="bank" id="iob">
+                                IOB
+                              </label>
+                            </li>
+                          </ul>
+                    </div>
+                    <div class="tab-pane fade myborder" id="debitcard" role="tabpanel"
+                          aria-labelledby="debitcard-tab">
+                        Debitcard Options...
+                    </div>
+                    <div class="tab-pane fade myborder" id="neft" role="tabpanel" aria-labelledby="neft-tab">
+                        NEFT/RTGS Options......
+                    </div>
+                    <div class="tab-pane fade myborder" id="investeasy" role="tabpanel"
+                            aria-labelledby="investeasy-tab">
+                            INVESTEASY Options...
+                    </div>
+                    <div class="tab-pane fade myborder" id="upi" role="tabpanel" aria-labelledby="upi-tab">
+                        UPI Options...
+                    </div>
+                  </div> -->
+        
+                  <!-- <div class="bottombtns mt-3 float-right">
+                    <button class="btn reject-btn mr-3" (click)="gotoTransactionDetails()">
+                      Cancel
+                    </button>
+                    <button class="btn ok-btn" routerLink='/dashboard'>
+                        Continue
+                    </button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="transactionDetails-sec mb-5 text-center" *ngIf="response">
+            <div class="card bg-light">
+              <!-- For Error Response-->
+              <div class="card-body" *ngIf="failure">
+                <fa name="times" class="fa fail"></fa>
+                <p>Transaction Failed. your Ref No: {{responseObj.merchantTransactionIdentifier}}</p>
+                <p>
+                  Payment transaction Failure. Dated {{responseObj.paymentMethod.paymentTransaction.dateTime}}
+                </p>
+                <button class="btn btn-primary" routerLink="/welcome">CONTINUE TO YOUR DASH BOARD</button>
+              </div>
+
+              <div class="card-body" *ngIf="!failure">
+                <fa name="check" class="fa succ"></fa>
+                <p>Thank you for your investment. your Ref No: {{responseObj.merchantTransactionIdentifier}}</p>
+                <p>
+                  Payment transaction successful. Dated {{responseObj.paymentMethod.paymentTransaction.dateTime}}
+                </p>
+                <button class="btn btn-primary" routerLink="/welcome">CONTINUE TO YOUR DASH BOARD</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col col-12 gotoDash">
+          <div class="btn dashboard">
+            <button class="btn ok-btn" routerLink="/dashboard">
+              Go to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 col-right">
+        <div class="selected-scheme" *ngIf="selectedSchemeName">
+          <p>Selected Scheme &nbsp;&nbsp; <span class="text-muted" (click)="showStep1()">Modifiy</span></p>
+          <hr>
+          <h5>{{selectedSchemeName}}</h5>
+          <br>
+          <br>
+          <div *ngIf="selectedScheme">
+            <p>Plan Options</p>
+            <hr>
+            <h6 class="optionss">Investment Option : {{selectedScheme.invOption}}</h6>
+            <h6 class="optionss">Plan Name : {{selectedScheme.planName}}</h6>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Scheme Options</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="options" *ngIf="selectedScheme">
+          <select name="plan" id="plan" class="form-control">
+            <option value="growth">{{selectedScheme.invOption}}</option>
+          </select>
+          <br>
+          <select name="options" id="options" class="form-control">
+            <option value="growth">{{selectedScheme.planName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" aria-label="Close" (click)="showStep2()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+  
